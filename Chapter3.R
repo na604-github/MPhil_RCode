@@ -442,11 +442,16 @@ library(glmmTMB) # Loading to account for zero-inflation in behavioural data
   
 # Model 12
   
-  model_12_null <- lmer(AvgDuration ~ 1 + (1|Name/Month/Year),
+  model_12_null_0 <- lmer(AvgDuration ~ 1 + (1|Name/Month/Year),
                                    data=flange_data)
-  model_12_full <- lmer(AvgDuration ~ Prop_eyeflange + zFAI + Site + zAssocH + LCH + total.rain + (1|Name/Month/Year),
+  model_12_full_0 <- lmer(AvgDuration ~ Prop_eyeflange + zFAI + Site + zAssocH + LCH + total.rain + (1|Name/Month/Year),
                                    data=flange_data)
-  summary(model_12_full)
+  summary(model_12_full) # Singularity issues, reducing random effect strucuture
+  
+  model_12_null <- lmer(AvgDuration ~ 1 + (1|Name),
+                          data=flange_data)
+  model_12_full <- lmer(AvgDuration ~ Prop_eyeflange + zFAI + Site + zAssocH + LCH + total.rain + (1|Name),
+                          data=flange_data)
   
   # Check assumptions
   
